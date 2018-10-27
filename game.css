@@ -1,0 +1,30 @@
+body {
+  background: #e5c3d1;
+}
+
+.main {
+  display: inline-grid;
+  grid-template-columns: [left_menu] 1fr [play_area] 660px [right_menu] 1fr
+}
+
+.play_area {
+  width: 660px;
+  margin: 0 auto;
+}
+
+.card {
+  width: 160px;
+  height: 160px;
+  background: purple;
+  float: left;
+  padding: 10px;
+  margin: 1.66%;
+  border-radius: 13%;
+  border: 3px solid blueviolet;
+}
+
+.card_image {
+  height: 100%;
+  width: 100%;
+}
+
