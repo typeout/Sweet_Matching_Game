@@ -8,23 +8,53 @@ body {
 }
 
 .play_area {
-  width: 660px;
+  width: 680px;
   margin: 0 auto;
 }
 
 .card {
+  position: relative;
   width: 160px;
   height: 160px;
-  background: purple;
+  margin: 5px;
   float: left;
-  padding: 10px;
-  margin: 1.66%;
-  border-radius: 13%;
-  border: 3px solid blueviolet;
 }
 
-.card_image {
-  height: 100%;
-  width: 100%;
+.front {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  background: purple;
+  padding: 10px;
+  border-radius: 13%;
+  transform: perspective( 600px ) rotateY( 0deg );
+  backface-visibility: hidden;
+  transition: transform .3s linear 0s;
+}
+
+.back {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  background: purple;
+  padding: 10px;
+  border-radius: 13%;
+  transform: perspective( 600px ) rotateY( 180deg );
+  backface-visibility: hidden;
+  transition: transform .3s linear 0s;
+}
+
+/* .card:hover > .front {
+  transform: perspective( 600px ) rotateY( -180deg );
+}
+
+.card:hover > .back {
+  transform: perspective( 600px ) rotateY( 0deg );
+} */
+
+.card img {
+  width: 130px;
+  height: 130px;
+  margin: 5px 5px;
 }
 

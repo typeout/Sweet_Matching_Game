@@ -1,7 +1,10 @@
 const play_area = document.querySelector(".play_area");
 const btnStart = document.querySelector(".start_game");
+let randomCards = [];
+let card1 = 666; 
+let card2 = 666;
 
-let number_cards = 12;
+let number_cards = 32;
 
 const cards = [
   {
@@ -36,6 +39,38 @@ const cards = [
     id: 7,
     url: "image_assets/asset8.svg"
   },
+  {
+    id: 8,
+    url: "image_assets/asset9.svg"
+  },
+  {
+    id: 9,
+    url: "image_assets/asset10.svg"
+  },
+  {
+    id: 10,
+    url: "image_assets/asset11.svg"
+  },
+  {
+    id: 11,
+    url: "image_assets/asset12.svg"
+  },
+  {
+    id: 12,
+    url: "image_assets/asset13.svg"
+  },
+  {
+    id: 13,
+    url: "image_assets/asset14.svg"
+  },
+  {
+    id: 14,
+    url: "image_assets/asset15.svg"
+  },
+  {
+    id: 15,
+    url: "image_assets/asset16.svg"
+  }
 ];
 
 btnStart.addEventListener('click', () => {
@@ -46,14 +81,66 @@ btnStart.addEventListener('click', () => {
 
 
 function startGame() {
+  let cardsInPlay = document.querySelectorAll(".card");
+  let cardsFront = document.querySelectorAll(".front");
+  let cardsBack = document.querySelectorAll(".back");
+  //console.log(cardsInPlay, cardsFront, cardsBack);
+  let lastCard;
+  let finished = true;
 
+  for (let i=0; i<cardsInPlay.length; i++) {
+    cardsInPlay[i].addEventListener('click', () => {
+      if (finished === true) {
+        cardsFront[i].style.transform = "perspective( 600px ) rotateY( -180deg )";
+        cardsBack[i].style.transform = "perspective( 600px ) rotateY( 0deg )";
+        console.log(randomCards[i]);
+        if (card1 === 666) {
+          card1 = randomCards[i];
+          console.log("card1 "+card1);
+          lastCard = i;
+          
+        } else if (card2 === 666 && lastCard !== i) {
+          card2 = randomCards[i];
+          console.log("card2 "+card2);
+          if (card1 === card2) {
+            console.log("matched");
+            setTimeout(() => {
+              cardsInPlay[i].style.visibility = "hidden";
+              cardsInPlay[lastCard].style.visibility = "hidden";
+
+              card1 = 666;
+              card2 = 666;
+              lastCard = 666; 
+              finished = true;
+            },500);
+            finished = false;
+          } else {
+            setTimeout(() => {
+              cardsFront[i].style.transform = "perspective( 600px ) rotateY( 0deg )";
+              cardsBack[i].style.transform = "perspective( 600px ) rotateY( 180deg )";
+              cardsFront[lastCard].style.transform = "perspective( 600px ) rotateY( 0deg )";
+              cardsBack[lastCard].style.transform = "perspective( 600px ) rotateY( 180deg )";  
+              
+              card1 = 666;
+              card2 = 666;
+              lastCard = 666;  
+              finished = true;
+            },500);
+            finished = false;
+          }
+        }
+      }
+    });
+  }
+  
 }
 
 function dealCards(card_count) {
   let output = "";
-  let randomCards = randomCardsInPlay(card_count);
+  randomCards = randomCardsInPlay(card_count);
   for (let i=0; i<card_count; i++) {
-    output += "<div class='card'><img class='card_image' src='" + cards[randomCards[i]].url + "'></div>";
+    output += `<div class="card"><div class='front'>MATCH</div>
+               <div class='back'><img class='card_image' src='${cards[randomCards[i]].url}'></div></div>`;
   }
   play_area.innerHTML = output;
 }
