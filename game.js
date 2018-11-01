@@ -4,7 +4,7 @@ let randomCards = [];
 let card1 = 666; 
 let card2 = 666;
 
-let number_cards = 32;
+let number_cards = 30;
 
 const cards = [
   {
@@ -93,17 +93,14 @@ function startGame() {
       if (finished === true) {
         cardsFront[i].style.transform = "perspective( 600px ) rotateY( -180deg )";
         cardsBack[i].style.transform = "perspective( 600px ) rotateY( 0deg )";
-        console.log(randomCards[i]);
+        
         if (card1 === 666) {
           card1 = randomCards[i];
-          console.log("card1 "+card1);
           lastCard = i;
           
         } else if (card2 === 666 && lastCard !== i) {
           card2 = randomCards[i];
-          console.log("card2 "+card2);
           if (card1 === card2) {
-            console.log("matched");
             setTimeout(() => {
               cardsInPlay[i].style.visibility = "hidden";
               cardsInPlay[lastCard].style.visibility = "hidden";
@@ -139,10 +136,11 @@ function dealCards(card_count) {
   let output = "";
   randomCards = randomCardsInPlay(card_count);
   for (let i=0; i<card_count; i++) {
-    output += `<div class="card"><div class='front'>MATCH</div>
+    output += `<div class="card"><div class='front'><img src="image_assets/back_card.svg"></div>
                <div class='back'><img class='card_image' src='${cards[randomCards[i]].url}'></div></div>`;
   }
   play_area.innerHTML = output;
+  screenSize(number_cards);
 }
 
 function randomCardsInPlay (card_count) {
@@ -166,5 +164,29 @@ function randomCardsInPlay (card_count) {
   }
   //return shuffled array
   return randomCardsArr;
+}
+
+function screenSize(card_count) {
+  let cardsInPlay = document.querySelectorAll(".card");
+
+  function setStyle(cl) {
+    for (let i=0; i < card_count; i++) {
+      cardsInPlay[i].classList.add(cl);
+    }
+  }
+
+  switch (card_count) {
+    case 30: 
+      setStyle("card30");
+      break;
+    case 20:
+      setStyle("card20");
+      break;
+    case 12:
+      setStyle("card12");
+      break;
+    default: 
+      setStyle("card30");
+  }
 }
 
